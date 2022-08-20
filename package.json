@@ -1,0 +1,30 @@
+{
+  "name": "Skribble",
+  "version": "1.0.0",
+  "engines": {
+    "node": "v14.16.0"
+  },
+  "description": "Skribble API and Web",
+  "main": "server.js",
+  "scripts": {
+    "browser-sync": "browser-sync start --proxy \"localhost:3000/home\" --files \"*\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jesulonimii",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-unless": "^2.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.2",
+    "nodemailer": "^6.7.0",
+    "nodemon": "^2.0.15",
+    "serverless-http": "^2.7.0"
+  }
+}
