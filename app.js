@@ -6,23 +6,23 @@ const mongoose =  require('mongoose')
 const path = require('path');
 const serverless = require('serverless-http');
 const layouts = require("express-ejs-layouts")
-const bodyParser = require('body-parser'); // middleware
-
-//Connect to DB
-mongoose.connect(process.env.MONGODB_CONNECT, ()=>{console.log('DB connected!')})
-
+const bodyParser = require('body-parser');
 
 //Import Routes
 const authRoute =  require('./routes/auth')
 
+//Connect to DB
+mongoose.connect(process.env.MONGODB_CONNECT, ()=>{console.log('DB connected!')})
 
-
+//Middlewares
 app.set("view engine", "ejs")
 app.use(express.static('views'));
 app.use(layouts)
+app.use(express.json())
 
-
+//Route Middlewares
 app.use('/api/user/', authRoute)
+
 
 
 

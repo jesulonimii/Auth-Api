@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.1",
     "express-unless": "^2.1.1",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.2",
     "nodemailer": "^6.7.0",
