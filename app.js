@@ -9,7 +9,9 @@ const layouts = require("express-ejs-layouts")
 const bodyParser = require('body-parser');
 
 //Import Routes
-const authRoute =  require('./routes/auth')
+const authRoute =  require('./routes/auth.route')
+const postRoute =  require('./routes/post.route')
+
 
 //Connect to DB
 mongoose.connect(process.env.MONGODB_CONNECT, ()=>{console.log('DB connected!')})
@@ -22,6 +24,7 @@ app.use(express.json())
 
 //Route Middlewares
 app.use('/api/user/', authRoute)
+app.use('/api/kwibs/', postRoute)
 
 
 

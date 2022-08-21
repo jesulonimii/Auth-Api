@@ -1,6 +1,7 @@
-const User = require("../models/UserModel");
+const User = require("../models/user.model");
 const dataValidation = require("../helpers/DataValidation")
 const bcrypt = require("bcryptjs")
+const jwt =  require('jsonwebtoken')
 
 exports.signup = async (req, res) => {
 
@@ -8,12 +9,12 @@ exports.signup = async (req, res) => {
     if (validateDataResult['error']) return res.status(400).send(JSON.stringify({error: `${validateDataResult['error'].message}`}))
 
     //check if email exists
-    const emailExist = await User.findOne({email: req.body.email});
+    const emailExist = await User.findOne({email: req.body.email.toLowerCase()});
     if (emailExist) return res.status(400).send(JSON.stringify({error: `User SignUp Failed`, cause: `Email already exists!`}))
 
     //check if username exists
     const usernameExist = await User.findOne({username: req.body.username});
-    if (emailExist) return res.status(400).send(JSON.stringify({error: `User SignUp Failed`, cause: `Username already exists!`}))
+    if (usernameExist) return res.status(400).send(JSON.stringify({error: `User SignUp Failed`, cause: `Username already exists!`}))
 
     //hash password
     const salt = await bcrypt.genSalt(10)
@@ -21,7 +22,8 @@ exports.signup = async (req, res) => {
 
     const user = new User({
         username: req.body.username,
-        email: req.body.email,
+        username_lower: req.body.username.toLowerCase(),
+        email: req.body.email.toLowerCase(),
         password: hashedPassword
     })
     try {
@@ -32,22 +34,32 @@ exports.signup = async (req, res) => {
     }
 
 }
-
 exports.login = async (req, res) => {
 
     const validateDataResult = dataValidation.loginValidationSchema.validate(req.body)
     if (validateDataResult['error']) return res.status(400).send(JSON.stringify({error: `${validateDataResult['error'].message}`}))
 
     //check if email exists
-    let user = await User.findOne({email: req.body.id});
+    let user = await User.findOne({email: req.body.id.toLowerCase()});
 
     if (!user){
-        user = await User.findOne({username: req.body.id});
+        user = await User.findOne({username_lower : req.body.id.toLowerCase()});
         if (!user) return res.status(400).send(JSON.stringify({error: `Login Failed`, cause: `We couldn't find any account matching the details provided.`}))
     }
 
     const validPass = await bcrypt.compare(req.body.password, user.password)
     if (!validPass) return res.status(400).send(JSON.stringify({error: `Login Failed`, cause: `We couldn't find any account matching the details provided.`}))
 
-    res.status(200).send(JSON.stringify({success: `Logged in!`}))
+    let details = {
+        id : user._id,
+        username : user.username,
+        email : user.email,
+        time : Date.now
+    }
+
+    const token = jwt.sign(details, process.env.JWT_TOKEN_SECRET)
+    details = Object.assign(details, {"auth-token" : token})
+
+
+    res.status(200).header('x-auth-token', token).send(JSON.stringify({success: `Logged in!`, data: details}))
 }

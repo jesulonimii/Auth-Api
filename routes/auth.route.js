@@ -1,8 +1,8 @@
 //Authentication Routes
 const router = require('express').Router();
-const User = require('../models/UserModel')
+const User = require('../models/user.model')
 const Joi = require('joi')
-const UserController = require("../controllers/UserController");
+const UserController = require("../controllers/user.controller");
 
 
 router.post('/signup', UserController.signup)
