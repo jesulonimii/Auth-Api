@@ -11,5 +11,5 @@ const app = require(path.resolve("app.js"));
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-    console.log(`Kwibblet API is live on port:${port}`)
+    console.log(`Auth API is live on port:${port}`)
 });

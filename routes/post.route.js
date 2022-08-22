@@ -1,14 +1,14 @@
 //Authentication Routes
 const router = require('express').Router();
 const PostController = require("../controllers/post.controller");
-const authenticate = require('../middlewares/jwt.middleware')
+const {verifyToken} = require('../middlewares/jwt.middleware')
 
 
-router.post('/compose', authenticate, PostController.create)
-router.post('/fetch', authenticate, PostController.fetch)
-router.post('/fetch/:id', authenticate, PostController.fetch)
-router.post('/edit/:id', authenticate, PostController.edit)
-router.post('/delete/:id', authenticate, PostController.delete)
+router.post('/compose', verifyToken, PostController.create)
+router.post('/fetch', verifyToken, PostController.fetch)
+router.post('/fetch/:id', verifyToken, PostController.fetch)
+router.post('/edit/:id', verifyToken, PostController.edit)
+router.post('/delete/:id', verifyToken, PostController.delete)
 
 
 

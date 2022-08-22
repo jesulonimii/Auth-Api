@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const dataValidation = require("../helpers/DataValidation")
 const bcrypt = require("bcryptjs")
-const jwt =  require('jsonwebtoken')
+const jwt =  require('../middlewares/jwt.middleware')
 
 exports.signup = async (req, res) => {
 
@@ -57,9 +57,9 @@ exports.login = async (req, res) => {
         time : Date.now
     }
 
-    const token = jwt.sign(details, process.env.JWT_TOKEN_SECRET)
-    details = Object.assign(details, {"auth-token" : token})
 
+    const token = jwt.createToken(req, res, details)
+    details = Object.assign(details, {"auth-token" : token})
 
     res.status(200).header('x-auth-token', token).send(JSON.stringify({success: `Logged in!`, data: details}))
 }

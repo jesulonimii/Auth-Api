@@ -9,9 +9,9 @@ exports.fetch = (req, res) =>{
 }
 
 exports.edit = (req, res) =>{
-    res.send('getting post')
+    res.send('editing post')
 }
 
 exports.delete = (req, res) =>{
-    res.send('getting post')
+    res.send('deleting post')
 }
