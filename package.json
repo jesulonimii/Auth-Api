@@ -1,10 +1,10 @@
 {
-  "name": "Kwibblet",
+  "name": "Auth API",
   "version": "1.0.0",
   "engines": {
     "node": "v14.16.0"
   },
-  "description": "Kwibblet API and Web",
+  "description": "Auth PI",
   "main": "server.js",
   "scripts": {
     "browser-sync": "browser-sync start --proxy \"localhost:3000/home\" --files \"*\"",
